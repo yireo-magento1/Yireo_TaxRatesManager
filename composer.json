@@ -12,13 +12,18 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0"
+        "php": ">=7.0.0",
+        "yireo/yireo-eu-vat-rates-library": "dev-master"
     },
     "require-dev":{
         "phpunit/phpunit":"*",
         "composer/composer":"*@dev"
     },
     "repositories": [
+        "yireo-eu-vat-rates": {
+            "type": "vcs",
+            "url": "git@gitlab.yireo.com:yireo-libraries/YireoEuVatRatesLibrary.git"
+        },
         {
             "type": "composer",
             "url": "https://packages.firegento.com"

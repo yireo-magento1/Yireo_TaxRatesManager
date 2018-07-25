@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Yireo TaxRatesManager for Magento 
+ *
+ * @package     Yireo_TaxRatesManager
+ * @author      Yireo (https://www.yireo.com/)
+ * @copyright   Copyright 2018 Yireo (https://www.yireo.com/)
+ * @license     Open Source License (OSL v3)
+ */
+-->
+<config>
+    <modules>
+        <Yireo_TaxRatesManager>
+            <version>1.0.9</version>
+        </Yireo_TaxRatesManager>
+    </modules>
+
+    <global>
+        <models>
+            <taxratesmanager>
+                <class>Yireo_TaxRatesManager_Model</class>
+            </taxratesmanager>
+        </models>
+    </global>
+
+    <adminhtml>
+        <translate>
+            <modules>
+                <Yireo_TaxRatesManager>
+                    <files>
+                        <default>Yireo_TaxRatesManager.csv</default>
+                    </files>
+                </Yireo_TaxRatesManager>
+            </modules>
+        </translate>
+
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <taxratesmanager translate="title" module="TaxRatesManager">
+                                            <title>TaxRatesManager Section</title>
+                                        </taxratesmanager>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+
+        <events>
+            <controller_action_predispatch>
+                <observers>
+                    <yireo_taxratemanager_shownotices>
+                        <type>model</type>
+                        <class>Yireo_TaxRatesManager_Observer_ShowNotices</class>
+                        <method>execute</method>
+                    </yireo_taxratemanager_shownotices>
+                </observers>
+            </controller_action_predispatch>
+        </events>
+    </adminhtml>
+
+    <crontab>
+        <jobs>
+            <yireo_taxratemanager>
+                <schedule>
+                    <cron_expr>*/30 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>taxratesmanager/cron::execute</model>
+                </run>
+            </yireo_taxratemanager>
+        </jobs>
+    </crontab>
+</config>

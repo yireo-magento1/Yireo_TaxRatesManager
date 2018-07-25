@@ -1,0 +1,3 @@
+# Modman file
+source/app/code/community/Yireo/TaxRatesManager              app/code/community/Yireo/TaxRatesManager
+source/app/etc/modules/Yireo_TaxRatesManager.xml             app/etc/modules/Yireo_TaxRatesManager.xml

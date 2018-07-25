@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Yireo TaxRatesManager module for Magento
+ *
+ * @package     Yireo_TaxRatesManager
+ * @author      Yireo (https://www.yireo.com/)
+ * @copyright   Copyright (c) 2018 Yireo (https://www.yireo.com/)
+ * @license     Open Software License
+ */
+-->
+<config>
+    <modules>
+        <Yireo_TaxRatesManager>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Yireo_TaxRatesManager>
+    </modules>
+</config>

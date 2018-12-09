@@ -86,8 +86,10 @@ class Yireo_TaxRatesManager_Check_Check
                     $msg .= ' Perhaps it should be removed?';
                 }
 
-                $this->logger->error($msg);
+                return $this->logger->error($msg);
             }
+
+            return $this->logger->success('No issues were found');
         }
     }
 }

@@ -17,6 +17,14 @@ class Yireo_TaxRatesManager_Logger_Messages implements Yireo_TaxRatesManager_Log
     /**
      * @param string $msg
      */
+    public function success(string $msg)
+    {
+        Mage::getSingleton('adminhtml/session')->addNotice($msg);
+    }
+
+    /**
+     * @param string $msg
+     */
     public function error(string $msg)
     {
         Mage::getSingleton('adminhtml/session')->addError($msg);

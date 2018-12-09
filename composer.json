@@ -19,7 +19,7 @@
         "phpunit/phpunit":"*",
         "composer/composer":"*@dev"
     },
-    "repositories": [
+    "repositories": {
         "yireo-eu-vat-rates": {
             "type": "vcs",
             "url": "git@gitlab.yireo.com:yireo-libraries/YireoEuVatRatesLibrary.git"
@@ -28,7 +28,7 @@
             "type": "composer",
             "url": "https://packages.firegento.com"
         }
-    ],
+    },
     "extra":{
         "magento-root-dir": "source/"
     }

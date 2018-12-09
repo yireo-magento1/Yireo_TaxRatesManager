@@ -31,5 +31,10 @@
     },
     "extra":{
         "magento-root-dir": "source/"
+    },
+    "autoload": {
+        "psr-4": {
+            "Yireo\\TaxRatesManager\\": "source/app/code/community/Yireo/TaxRatesManager"
+        }
     }
 }

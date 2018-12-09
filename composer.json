@@ -24,7 +24,7 @@
             "type": "vcs",
             "url": "git@gitlab.yireo.com:yireo-libraries/YireoEuVatRatesLibrary.git"
         },
-        {
+        "packagist": {
             "type": "composer",
             "url": "https://packages.firegento.com"
         }

@@ -7,6 +7,11 @@ declare(strict_types=1);
 class Yireo_TaxRatesManager_Check_Check
 {
     /**
+     * @var Yireo_TaxRatesManager_Config_Config
+     */
+    private $config;
+
+    /**
      * @var Yireo_TaxRatesManager_Logger_Console
      */
     private $logger;
@@ -28,15 +33,18 @@ class Yireo_TaxRatesManager_Check_Check
 
     /**
      * Yireo_TaxRatesManager_Provider constructor.
+     * @param Yireo_TaxRatesManager_Config_Config $config
      * @param Yireo_TaxRatesManager_Logger_Interface $logger
      * @param string $onlineRatesUrl
      * @param int $verbosity
      */
     public function __construct(
+        Yireo_TaxRatesManager_Config_Config $config,
         Yireo_TaxRatesManager_Logger_Interface $logger,
         string $onlineRatesUrl = 'https://raw.githubusercontent.com/yireo/Magento_EU_Tax_Rates/master/tax_rates_eu.csv',
         int $verbosity = 0
     ) {
+        $this->config = $config;
         $this->logger = $logger;
         $this->onlineRatesProvider = new Yireo_TaxRatesManager_Provider_OnlineRates($onlineRatesUrl);
         $this->storedRatesProvider = new Yireo_TaxRatesManager_Provider_StoredRates();

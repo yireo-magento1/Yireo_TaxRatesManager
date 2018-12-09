@@ -17,6 +17,7 @@ class Yireo_TaxRatesManager_Provider_StoredRates
         /** @var Mage_Tax_Model_Calculation_Rate $item */
         foreach ($collection as $item) {
             $rates[] = new Yireo_TaxRatesManager_Rate_Rate(
+                (int) $item->getId(),
                 (string) $item->getCode(),
                 (string) $item->getTaxCountryId(),
                 (float) $item->getRate()
@@ -24,5 +25,23 @@ class Yireo_TaxRatesManager_Provider_StoredRates
         }
 
         return $rates;
+    }
+
+    /**
+     * @param Yireo_TaxRatesManager_Rate_Rate $rate
+     * @throws Exception
+     */
+    public function saveRate(Yireo_TaxRatesManager_Rate_Rate $rate)
+    {
+        $model = Mage::getModel('tax/calculation_rate');
+
+        if ($rate->getId() > 0) {
+            $model->load($rate->getId());
+        }
+
+        $model->setCode($rate->getCode());
+        $model->setTaxCountryId($rate->getCountryId());
+        $model->setRate($rate->getPercentage());
+        $model->save();
     }
 }

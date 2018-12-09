@@ -34,6 +34,7 @@ class Yireo_TaxRatesManager_Provider_OnlineRates
 
         foreach ($onlineRates->getRates() as $onlineRate) {
             $rates[] = new Yireo_TaxRatesManager_Rate_Rate(
+                0,
                 (string) $onlineRate['code'],
                 (string) $onlineRate['country'],
                 (float) $onlineRate['rate']

@@ -67,7 +67,7 @@ class Yireo_TaxRatesManager_Check_Check
         }
 
         $this->checkMatches($storedRates, $onlineRates);
-        // @todo: Check if $onlineRates contains new rates not yet included in $storedRates
+
         return true;
     }
 
@@ -78,13 +78,22 @@ class Yireo_TaxRatesManager_Check_Check
     private function checkMatches(array $storedRates, array $onlineRates)
     {
         foreach ($storedRates as $storedRate) {
-            $this->checkMatch($storedRate, $onlineRates);
+            $this->checkStoredRate($storedRate, $onlineRates);
+        }
+
+        foreach ($onlineRates as $onlineRate) {
+            $this->checkOnlineRate($onlineRate, $storedRates);
         }
 
         return $this->logger->success('No issues were found');
     }
 
-    private function checkMatch(Yireo_TaxRatesManager_Rate_Rate $storedRate, array $onlineRates)
+    /**
+     * @param Yireo_TaxRatesManager_Rate_Rate $storedRate
+     * @param Yireo_TaxRatesManager_Rate_Rate[] $onlineRates
+     * @return bool
+     */
+    private function checkStoredRate(Yireo_TaxRatesManager_Rate_Rate $storedRate, array $onlineRates)
     {
         $suggestRate = 0;
         foreach ($onlineRates as $onlineRate) {
@@ -94,7 +103,9 @@ class Yireo_TaxRatesManager_Check_Check
 
             $suggestRate = $this->getSuggestedRate($storedRate->getPercentage(), $onlineRate->getPercentage(), $suggestRate);
 
-            //$this->logger->info('NOTICE: Comparing '.$onlineRate->getCountryId().' '.$onlineRate->getPercentage().' with '.$storedRate->getPercentage());
+            if ($this->verbosity >= 2) {
+                $this->logger->info('NOTICE: Comparing '.$onlineRate->getCountryId().' '.$onlineRate->getPercentage().' with '.$storedRate->getPercentage());
+            }
 
             if ($onlineRate->getPercentage() !== $storedRate->getPercentage()) {
                 continue;
@@ -113,6 +124,32 @@ class Yireo_TaxRatesManager_Check_Check
         }
 
         $this->logger->error($msg);
+    }
+
+    /**
+     * @param Yireo_TaxRatesManager_Rate_Rate $onlineRate
+     * @param Yireo_TaxRatesManager_Rate_Rate[] $storedRates
+     */
+    private function checkOnlineRate(Yireo_TaxRatesManager_Rate_Rate $onlineRate, array $storedRates)
+    {
+        $foundMatch = false;
+
+        foreach ($storedRates as $storedRate) {
+            if ($storedRate->getCountryId() !== $onlineRate->getCountryId()) {
+                continue;
+            }
+
+            if ($storedRate->getPercentage() === $onlineRate->getPercentage()) {
+                continue;
+            }
+
+            $foundMatch = true;
+        }
+
+        if (!$foundMatch) {
+            $msg = sprintf('WARNING: Rate "%s" (%s%%) is not configured in your store [%s]', $onlineRate->getCode(), $onlineRate->getPercentage(), $onlineRate->getCountryId());
+            $this->logger->info($msg);
+        }
     }
 
     /**

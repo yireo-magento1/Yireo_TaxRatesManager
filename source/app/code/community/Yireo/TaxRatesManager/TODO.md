@@ -1,4 +1,6 @@
 # TODO
+- Add PHPComments everywhere
+- Test email functionality
 - Do not use cache when collecting new rates via cronjob
 - Add unit tests & integration tests
 - Allow for dummy URL to be used to see if it works

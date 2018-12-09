@@ -30,6 +30,8 @@ class Yireo_TaxRatesManager_Provider_OnlineRates
 
         $rates = [];
         $onlineRates = new Yireo\EuVatRates\MagentoRates(BP.'/var/tmp');
+        $onlineRates->setPath($this->onlineUrl);
+
         foreach ($onlineRates->getRates() as $onlineRate) {
             $rates[] = new Yireo_TaxRatesManager_Rate_Rate(
                 (string) $onlineRate['code'],

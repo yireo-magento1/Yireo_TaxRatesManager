@@ -22,17 +22,25 @@ class Yireo_TaxRatesManager_Check_Check
     private $storedRatesProvider;
 
     /**
+     * @var int
+     */
+    private $verbosity;
+
+    /**
      * Yireo_TaxRatesManager_Provider constructor.
      * @param Yireo_TaxRatesManager_Logger_Interface $logger
      * @param string $onlineRatesUrl
+     * @param int $verbosity
      */
     public function __construct(
         Yireo_TaxRatesManager_Logger_Interface $logger,
-        string $onlineRatesUrl = 'https://raw.githubusercontent.com/yireo/Magento_EU_Tax_Rates/master/tax_rates_eu.csv'
+        string $onlineRatesUrl = 'https://raw.githubusercontent.com/yireo/Magento_EU_Tax_Rates/master/tax_rates_eu.csv',
+        int $verbosity = 0
     ) {
         $this->logger = $logger;
         $this->onlineRatesProvider = new Yireo_TaxRatesManager_Provider_OnlineRates($onlineRatesUrl);
         $this->storedRatesProvider = new Yireo_TaxRatesManager_Provider_StoredRates();
+        $this->verbosity = $verbosity;
     }
 
     /**
@@ -40,10 +48,24 @@ class Yireo_TaxRatesManager_Check_Check
      * @throws Zend_Http_Client_Exception
      * @return bool
      */
-    public function execute(): bool
+    public function __invoke(): bool
     {
         $storedRates = $this->storedRatesProvider->getRates();
+        if ($this->verbosity >= 2) {
+            $this->logger->info('Stored rates:');
+            foreach ($storedRates as $storedRate) {
+                $this->logger->info(' - ' . $storedRate->getCode() . ' = ' . $storedRate->getPercentage());
+            }
+        }
+
         $onlineRates = $this->onlineRatesProvider->getRates();
+        if ($this->verbosity >= 2) {
+            $this->logger->info('Online rate:');
+            foreach ($onlineRates as $onlineRate) {
+                $this->logger->info(' - ' . $onlineRate->getCode() . ' = ' . $onlineRate->getPercentage());
+            }
+        }
+
         $this->checkMatches($storedRates, $onlineRates);
         // @todo: Check if $onlineRates contains new rates not yet included in $storedRates
         return true;
@@ -53,43 +75,59 @@ class Yireo_TaxRatesManager_Check_Check
      * @param Yireo_TaxRatesManager_Rate_Rate[] $storedRates
      * @param Yireo_TaxRatesManager_Rate_Rate[] $onlineRates
      */
-    private function checkMatches($storedRates, $onlineRates)
+    private function checkMatches(array $storedRates, array $onlineRates)
     {
-        foreach($storedRates as $storedRate) {
-            $hasMatch = false;
-            $suggestedRate = 0;
-            foreach ($onlineRates as $onlineRate) {
-                if ($onlineRate->getCountryId() !== $storedRate->getCountryId()) {
-                    continue;
-                }
-
-                $originalDifference = $storedRate->getPercentage() - $suggestedRate;
-                $newDifference = $storedRate->getPercentage() - $onlineRate->getPercentage();
-                if ($originalDifference > $newDifference) {
-                    $suggestedRate = $onlineRate->getPercentage();
-                }
-
-                if ($onlineRate->getPercentage() !== $storedRate->getPercentage()) {
-                    continue;
-                }
-
-                $hasMatch = true;
-                break;
-            }
-
-            if (!$hasMatch) {
-                $msg = sprintf('Rate "%s" (%s%%) seems incorrect.', $storedRate->getCode(), $storedRate->getPercentage());
-
-                if ($suggestedRate > 0) {
-                    $msg .= ' '.sprintf('Perhaps it should be "%s%%"?', $suggestedRate);
-                } else {
-                    $msg .= ' Perhaps it should be removed?';
-                }
-
-                return $this->logger->error($msg);
-            }
-
-            return $this->logger->success('No issues were found');
+        foreach ($storedRates as $storedRate) {
+            $this->checkMatch($storedRate, $onlineRates);
         }
+
+        return $this->logger->success('No issues were found');
+    }
+
+    private function checkMatch(Yireo_TaxRatesManager_Rate_Rate $storedRate, array $onlineRates)
+    {
+        $suggestRate = 0;
+        foreach ($onlineRates as $onlineRate) {
+            if ($onlineRate->getCountryId() !== $storedRate->getCountryId()) {
+                continue;
+            }
+
+            $suggestRate = $this->getSuggestedRate($storedRate->getPercentage(), $onlineRate->getPercentage(), $suggestRate);
+
+            //$this->logger->info('NOTICE: Comparing '.$onlineRate->getCountryId().' '.$onlineRate->getPercentage().' with '.$storedRate->getPercentage());
+
+            if ($onlineRate->getPercentage() !== $storedRate->getPercentage()) {
+                continue;
+            }
+
+            return true;
+        }
+
+
+        $msg = sprintf('Rate "%s" (%s%%) seems incorrect.', $storedRate->getCode(), $storedRate->getPercentage());
+
+        if ($suggestRate > 0) {
+            $msg .= ' ' . sprintf('Perhaps it should be %s%%?', $suggestRate);
+        } else {
+            $msg .= ' Perhaps it should be removed or empty?';
+        }
+
+        $this->logger->error($msg);
+    }
+
+    /**
+     * @param float $oldRate
+     * @param float $newRate
+     * @param float $suggestedRate
+     * @return float
+     * @todo Improve this by checking if new diff is smaller than old diff
+     */
+    private function getSuggestedRate(float $oldRate, float $newRate, float $suggestedRate = 0.0): float
+    {
+        if ($newRate > $oldRate) {
+            return $newRate;
+        }
+
+        return $suggestedRate;
     }
 }

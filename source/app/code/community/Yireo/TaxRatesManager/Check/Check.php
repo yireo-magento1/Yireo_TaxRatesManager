@@ -33,6 +33,11 @@ class Yireo_TaxRatesManager_Check_Check
     private $storedRatesProvider;
 
     /**
+     * @var Yireo_TaxRatesManager_Util_Comparer
+     */
+    private $comparer;
+
+    /**
      * @var int
      */
     private $verbosity;
@@ -42,6 +47,8 @@ class Yireo_TaxRatesManager_Check_Check
      * @param Config $config
      * @param Logger $logger
      * @param Yireo_TaxRatesManager_Provider_OnlineRates $onlineRatesProvider
+     * @param Yireo_TaxRatesManager_Provider_StoredRates $storedRatesProvider
+     * @param Yireo_TaxRatesManager_Util_Comparer $comparer
      * @param int $verbosity
      */
     public function __construct(
@@ -49,12 +56,14 @@ class Yireo_TaxRatesManager_Check_Check
         Logger $logger,
         OnlineRatesProvider $onlineRatesProvider,
         StoredRatesProvider $storedRatesProvider,
+        Yireo_TaxRatesManager_Util_Comparer $comparer,
         int $verbosity = 0
     ) {
         $this->config = $config;
         $this->logger = $logger;
         $this->onlineRatesProvider = $onlineRatesProvider;
         $this->storedRatesProvider = $storedRatesProvider;
+        $this->comparer = $comparer;
         $this->verbosity = $verbosity;
     }
 
@@ -116,7 +125,7 @@ class Yireo_TaxRatesManager_Check_Check
                 continue;
             }
 
-            $suggestRate = $this->getSuggestedRate($storedRate->getPercentage(), $onlineRate->getPercentage(),
+            $suggestRate = $this->comparer->getSmallestDifference($storedRate->getPercentage(), $onlineRate->getPercentage(),
                 $suggestRate);
 
             if ($this->verbosity >= 2) {
@@ -172,7 +181,7 @@ class Yireo_TaxRatesManager_Check_Check
             return false;
         }
 
-        $this->logger->warning(sprintf('The rate "%s" (%s%%) is not configured in your store yet [%s]',
+        $this->logger->warning(sprintf('A new rate "%s" (%s%%) is not configured in your store yet [%s]',
             $onlineRate->getCode(),
             $onlineRate->getPercentage(),
             $onlineRate->getCountryId()
@@ -187,19 +196,4 @@ class Yireo_TaxRatesManager_Check_Check
         return true;
     }
 
-    /**
-     * @param float $oldRate
-     * @param float $newRate
-     * @param float $suggestedRate
-     * @return float
-     * @todo Improve this by checking if new diff is smaller than old diff
-     */
-    private function getSuggestedRate(float $oldRate, float $newRate, float $suggestedRate = 0.0): float
-    {
-        if ($newRate > $oldRate) {
-            return $newRate;
-        }
-
-        return $suggestedRate;
-    }
 }

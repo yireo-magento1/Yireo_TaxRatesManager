@@ -77,17 +77,15 @@ class Yireo_TaxRatesManager_Check_Check
     {
         $storedRates = $this->storedRatesProvider->getRates();
         if ($this->verbosity >= 2) {
-            $this->logger->info('Stored rates:');
             foreach ($storedRates as $storedRate) {
-                $this->logger->info(' - ' . $storedRate->getCode() . ' = ' . $storedRate->getPercentage());
+                $this->logger->info('Stored rate: ' . $storedRate->getCode() . ' = ' . $storedRate->getPercentage());
             }
         }
 
         $onlineRates = $this->onlineRatesProvider->getRates();
         if ($this->verbosity >= 2) {
-            $this->logger->info('Online rate:');
             foreach ($onlineRates as $onlineRate) {
-                $this->logger->info(' - ' . $onlineRate->getCode() . ' = ' . $onlineRate->getPercentage());
+                $this->logger->info('Online rate: ' . $onlineRate->getCode() . ' = ' . $onlineRate->getPercentage());
             }
         }
 
@@ -116,6 +114,7 @@ class Yireo_TaxRatesManager_Check_Check
      * @param Rate $storedRate
      * @param Rate[] $onlineRates
      * @return bool
+     * @throws Mage_Core_Model_Store_Exception
      */
     private function checkStoredRate(Rate $storedRate, array $onlineRates)
     {
@@ -142,6 +141,14 @@ class Yireo_TaxRatesManager_Check_Check
 
         $msg = sprintf('Existing rate "%s" (%s%%) seems incorrect.', $storedRate->getCode(), $storedRate->getPercentage());
 
+        if ($this->config->fixAutomatically()) {
+            $storedRate->setPercentage($suggestRate);
+            $this->storedRatesProvider->saveRate($storedRate);
+            $msg = sprintf('Automatically corrected existing rate to %s%%: %s', $suggestRate, $storedRate->getCode());
+            $this->logger->success($msg);
+            return;
+        }
+
         if ($suggestRate > 0) {
             $msg .= ' ' . sprintf('Perhaps it should be %s%%?', $suggestRate);
         } else {
@@ -166,6 +173,11 @@ class Yireo_TaxRatesManager_Check_Check
         $foundMatch = false;
 
         foreach ($storedRates as $storedRate) {
+            if ($storedRate->getCode() === $onlineRate->getCode()) {
+                $foundMatch = true;
+                break;
+            }
+
             if ($storedRate->getCountryId() !== $onlineRate->getCountryId()) {
                 continue;
             }
@@ -175,6 +187,7 @@ class Yireo_TaxRatesManager_Check_Check
             }
 
             $foundMatch = true;
+            break;
         }
 
         if ($foundMatch) {

@@ -29,6 +29,7 @@ class Yireo_TaxRatesManager_Object_Manager
     /**
      * @param string $className
      * @return object|null
+     * @throws ReflectionException
      */
     private function getMagentoObject(string $className)
     {
@@ -96,9 +97,12 @@ class Yireo_TaxRatesManager_Object_Manager
 
     /**
      * @return bool
+     * @throws ReflectionException
      */
     private function isCli(): bool
     {
-        return (!isset($_SERVER['SERVER_SOFTWARE']) && (php_sapi_name() == 'cli'));
+        /** @var Yireo_TaxRatesManager_Util_CommandLine $cli */
+        $cli = $this->get(Yireo_TaxRatesManager_Util_CommandLine::class);
+        return $cli->isCli();
     }
 }

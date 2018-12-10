@@ -10,15 +10,22 @@ class Yireo_TaxRatesManager_Config_Config
      * @var Mage_Core_Model_App
      */
     private $app;
+    /**
+     * @var Yireo_TaxRatesManager_Util_CommandLine
+     */
+    private $cli;
 
     /**
      * Yireo_TaxRatesManager_Config_Config constructor.
      * @param Mage_Core_Model_App $app
+     * @param Yireo_TaxRatesManager_Util_CommandLine $cli
      */
     public function __construct(
-        Mage_Core_Model_App $app
+        Mage_Core_Model_App $app,
+        Yireo_TaxRatesManager_Util_CommandLine $cli
     ) {
         $this->app = $app;
+        $this->cli = $cli;
     }
 
     /**
@@ -27,7 +34,11 @@ class Yireo_TaxRatesManager_Config_Config
      */
     public function fixAutomatically(): bool
     {
-        return (bool) $this->getModuleConfig('fix_automatically');
+        if ($this->cli->isCli()) {
+            return (bool)$this->getModuleConfig('fix_automatically_in_cron');
+        }
+
+        return (bool)$this->getModuleConfig('fix_automatically_in_backend');
     }
 
     /**
@@ -36,7 +47,7 @@ class Yireo_TaxRatesManager_Config_Config
      */
     public function sendEmail(): bool
     {
-        return (bool) $this->getModuleConfig('send_email');
+        return (bool)$this->getModuleConfig('send_email');
     }
 
     /**
@@ -45,28 +56,32 @@ class Yireo_TaxRatesManager_Config_Config
      */
     public function email(): string
     {
-        $email = (string) $this->getModuleConfig('email');
+        $email = (string)$this->getModuleConfig('email');
         if (!empty($email)) {
             return $email;
         }
 
-        return (string) $this->getModuleConfig('email', 'trans_email/ident_general');
+        return (string)$this->getModuleConfig('email', 'trans_email/ident_general');
     }
 
+    /**
+     * @return string
+     * @throws Mage_Core_Model_Store_Exception
+     */
     public function getFeedUrl(): string
     {
-        $alternativeFeed = (string) $this->getModuleConfig('alternative_feed_source');
+        $alternativeFeed = (string)$this->getModuleConfig('alternative_feed_source');
         if ($alternativeFeed) {
             return $alternativeFeed;
         }
 
         $prefix = 'https://raw.githubusercontent.com/yireo/Magento_EU_Tax_Rates/master/';
-        $feed = (string) $this->getModuleConfig('feed_source');
+        $feed = (string)$this->getModuleConfig('feed_source');
         if (!empty($feed)) {
-            return $prefix.$feed;
+            return $prefix . $feed;
         }
 
-        return $prefix.'tax_rates_eu.csv';
+        return $prefix . 'tax_rates_eu.csv';
     }
 
     /**
@@ -75,7 +90,7 @@ class Yireo_TaxRatesManager_Config_Config
      */
     public function updateNameFromExistingItems(): bool
     {
-        return (bool) $this->getModuleConfig('update_name');
+        return (bool)$this->getModuleConfig('update_name');
     }
 
     /**
@@ -92,6 +107,6 @@ class Yireo_TaxRatesManager_Config_Config
 
         $prefix = preg_replace('/\/$/', '', $prefix);
 
-        return $this->app->getStore()->getConfig($prefix.'/'.$path);
+        return $this->app->getStore()->getConfig($prefix . '/' . $path);
     }
 }

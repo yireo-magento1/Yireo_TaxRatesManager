@@ -34,19 +34,29 @@
                     <show_in_website>0</show_in_website>
                     <show_in_store>0</show_in_store>
                     <fields>
-                        <fix_automatically translate="label">
-                            <label>Fix Automatically</label>
-                            <comment><![CDATA[Fix all suggestions automatically]]></comment>
+                        <fix_automatically_in_backend translate="label">
+                            <label>Fix Automatically via Backend</label>
+                            <comment><![CDATA[Fix all suggestions automatically in Magento Admin Panel]]></comment>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>0</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </fix_automatically>
+                        </fix_automatically_in_backend>
+                        <fix_automatically_in_cron translate="label">
+                            <label>Fix Automatically via Cron</label>
+                            <comment><![CDATA[Fix all suggestions automatically via cron]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </fix_automatically_in_cron>
                         <send_email translate="label">
                             <label>Send Email</label>
-                            <comment><![CDATA[Send email via cron with suggestions]]></comment>
+                            <comment><![CDATA[Send email via cron with suggestions or fixes]]></comment>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>1</sort_order>
@@ -56,7 +66,7 @@
                         </send_email>
                         <email translate="label">
                             <label>Email address</label>
-                            <comment><![CDATA[Email to send output of cron to]]></comment>
+                            <comment><![CDATA[Email to send output of cron to, if different from default Store Owner]]></comment>
                             <frontend_type>text</frontend_type>
                             <sort_order>2</sort_order>
                             <show_in_default>1</show_in_default>

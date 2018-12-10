@@ -40,7 +40,7 @@ class Yireo_TaxRatesManager_Object_Factory
      */
     public function getSingleton($className)
     {
-        if (!self::$instances[$className]) {
+        if (!isset(self::$instances[$className])) {
             self::$instances[$className] = new $className;
         }
 

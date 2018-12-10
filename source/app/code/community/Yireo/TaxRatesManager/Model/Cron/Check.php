@@ -7,9 +7,9 @@ use Yireo_TaxRatesManager_Check_Check as Check;
 use Mage_Core_Model_Store as Store;
 
 /**
- * Class Yireo_TaxRatesManager_Cron_Check
+ * Class Yireo_TaxRatesManager_Model_Cron_Check
  */
-class Yireo_TaxRatesManager_Cron_Check
+class Yireo_TaxRatesManager_Model_Cron_Check
 {
     /**
      * @var Config
@@ -29,30 +29,29 @@ class Yireo_TaxRatesManager_Cron_Check
     /**
      * Yireo_TaxRatesManager_Model_Cron constructor.
      */
-    public function __construct(
-        Config $config,
-        Logger $logger,
-        Check $check
-    ) {
-        $this->config = $config;
-        $this->logger = $logger;
-        $this->check = $check;
+    public function __construct()
+    {
+        $factory = new Yireo_TaxRatesManager_Object_Factory();
+        $this->config = $factory->getConfig();
+        $this->logger = $factory->getLogger();
+        $this->check = $factory->getCheck();
     }
 
     /**
      * @return bool
+     * @throws Mage_Core_Model_Store_Exception
      */
     public function execute(): bool
     {
-        if ($this->config->sendEmail() === false) {
-            return false;
-        }
-
         ob_start();
-        callback($this->check); // @todo: Is this still working?
+        call_user_func($this->check);
         $contents = ob_get_clean();
 
         if (!$contents) {
+            return false;
+        }
+
+        if ($this->config->sendEmail() === false) {
             return false;
         }
 

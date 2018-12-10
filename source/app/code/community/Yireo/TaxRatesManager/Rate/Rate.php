@@ -76,4 +76,12 @@ class Yireo_TaxRatesManager_Rate_Rate
     {
         return $this->percentage;
     }
+
+    /**
+     * @param float $percentage
+     */
+    public function setPercentage(float $percentage)
+    {
+        $this->percentage = $percentage;
+    }
 }

@@ -75,21 +75,22 @@
 
     <crontab>
         <jobs>
-            <yireo_taxratemanager>
+            <yireo_taxratesmanager>
                 <schedule>
                     <cron_expr>*/30 * * * *</cron_expr>
                 </schedule>
                 <run>
-                    <model>Yireo_TaxRatesManager_Cron_Check::execute</model>
+                    <model>taxratesmanager/cron_check::execute</model>
                 </run>
-            </yireo_taxratemanager>
+            </yireo_taxratesmanager>
         </jobs>
     </crontab>
 
     <default>
         <taxratesmanager>
             <settings>
-                <fix_automatically>0</fix_automatically>
+                <fix_automatically_in_backend>0</fix_automatically_in_backend>
+                <fix_automatically_in_cron>0</fix_automatically_in_cron>
                 <send_email>0</send_email>
                 <email/>
                 <feed_source>tax_rates_eu.csv</feed_source>

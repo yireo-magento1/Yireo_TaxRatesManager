@@ -11,7 +11,7 @@ class Yireo_TaxRatesManager_Logger_Console implements Yireo_TaxRatesManager_Api_
      */
     public function info(string $msg)
     {
-        echo "NOTICE: ".$msg."\n";
+        echo "INFO: ".$msg."\n";
     }
 
     /**

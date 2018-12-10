@@ -60,13 +60,9 @@ class Yireo_TaxRatesManager_Object_Factory
      * @return Yireo_TaxRatesManager_Api_LoggerInterface
      * @throws Mage_Core_Model_Store_Exception
      */
-    public function getLogger(string $type = 'messages'): Yireo_TaxRatesManager_Api_LoggerInterface
+    public function getLogger(string $type = 'console'): Yireo_TaxRatesManager_Api_LoggerInterface
     {
-        if ($type === 'console' || Mage::app()->getStore()->isAdmin()) {
-            return $this->get(Yireo_TaxRatesManager_Logger_Console::class);
-        }
-
-        return $this->get(Yireo_TaxRatesManager_Logger_Messages::class);
+        return $this->get(Yireo_TaxRatesManager_Api_LoggerInterface::class);
     }
 
     /**

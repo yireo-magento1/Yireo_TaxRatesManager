@@ -35,6 +35,14 @@ class Yireo_TaxRatesManager_Object_Manager
         if ($className === Mage_Core_Model_App::class) {
             return Mage::app();
         }
+
+        if ($className === Yireo_TaxRatesManager_Api_LoggerInterface::class) {
+            if (!$this->isCli()) {
+                return $this->get(Yireo_TaxRatesManager_Logger_Messages::class);
+            }
+
+            return $this->get(Yireo_TaxRatesManager_Logger_Console::class);
+        }
     }
 
     /**
@@ -55,9 +63,7 @@ class Yireo_TaxRatesManager_Object_Manager
      */
     private function getPreferences() : array
     {
-        return [
-            Yireo_TaxRatesManager_Api_LoggerInterface::class => Yireo_TaxRatesManager_Logger_Messages::class
-        ];
+        return [];
     }
 
     /**
@@ -86,5 +92,13 @@ class Yireo_TaxRatesManager_Object_Manager
         }
 
         return $constructorParameters;
+    }
+
+    /**
+     * @return bool
+     */
+    private function isCli(): bool
+    {
+        return (!isset($_SERVER['SERVER_SOFTWARE']) && (php_sapi_name() == 'cli'));
     }
 }

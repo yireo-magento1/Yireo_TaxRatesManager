@@ -7,17 +7,18 @@ declare(strict_types=1);
 class Yireo_TaxRatesManager_Provider_OnlineRates
 {
     /**
-     * @var string
+     * @var Yireo_TaxRatesManager_Config_Config
      */
-    private $onlineUrl;
+    private $config;
 
     /**
      * Yireo_TaxRatesManager_Provider_OnlineRates constructor.
-     * @param string $onlineUrl
+     * @param Yireo_TaxRatesManager_Config_Config $config
      */
-    public function __construct(string $onlineUrl)
-    {
-        $this->onlineUrl = $onlineUrl;
+    public function __construct(
+        Yireo_TaxRatesManager_Config_Config $config
+    ) {
+        $this->config = $config;
     }
 
     /**
@@ -31,8 +32,9 @@ class Yireo_TaxRatesManager_Provider_OnlineRates
         $rates = [];
         $onlineRates = new Yireo\EuVatRates\MagentoRates(BP.'/var/tmp');
 
-        if (!empty($this->onlineUrl)) {
-            $onlineRates->setPath($this->onlineUrl);
+        $onlineUrl = $this->config->getFeedUrl();
+        if (!empty($onlineUrl)) {
+            $onlineRates->setPath($onlineUrl);
         }
 
         foreach ($onlineRates->getRates() as $onlineRate) {

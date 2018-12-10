@@ -68,7 +68,7 @@
                             <comment><![CDATA[Source to load tax rates from. tax_rates_eu.csv by default.]]></comment>
                             <frontend_type>select</frontend_type>
                             <source_model>taxratesmanager/system_config_source_feed</source_model>
-                            <sort_order>0</sort_order>
+                            <sort_order>3</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -77,7 +77,7 @@
                             <label>Alternative feed source</label>
                             <comment><![CDATA[A full URL to an alternative CSV feed]]></comment>
                             <frontend_type>text</frontend_type>
-                            <sort_order>2</sort_order>
+                            <sort_order>4</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -87,7 +87,7 @@
                             <comment><![CDATA[When updating a tax rate, also update its name]]></comment>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <sort_order>3</sort_order>
+                            <sort_order>5</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>

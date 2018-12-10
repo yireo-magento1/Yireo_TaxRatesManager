@@ -46,8 +46,27 @@ class Yireo_TaxRatesManager_Config_Config
     public function email(): string
     {
         $email = (string) $this->getModuleConfig('email');
+        if (!empty($email)) {
+            return $email;
+        }
 
-        return $email;
+        return (string) $this->getModuleConfig('email', 'trans_email/ident_general');
+    }
+
+    public function getFeedUrl(): string
+    {
+        $alternativeFeed = (string) $this->getModuleConfig('alternative_feed_source');
+        if ($alternativeFeed) {
+            return $alternativeFeed;
+        }
+
+        $prefix = 'https://raw.githubusercontent.com/yireo/Magento_EU_Tax_Rates/master/';
+        $feed = (string) $this->getModuleConfig('feed_source');
+        if (!empty($feed)) {
+            return $prefix.$feed;
+        }
+
+        return $prefix.'tax_rates_eu.csv';
     }
 
     /**
@@ -60,12 +79,19 @@ class Yireo_TaxRatesManager_Config_Config
     }
 
     /**
-     * @param string $pathSuffix
+     * @param string $path
+     * @param string $prefix
      * @return string|null
      * @throws Mage_Core_Model_Store_Exception
      */
-    private function getModuleConfig(string $pathSuffix)
+    private function getModuleConfig(string $path, string $prefix = '')
     {
-        return $this->app->getStore()->getConfig('taxratesmanager/settings/'.$pathSuffix);
+        if (empty($prefix)) {
+            $prefix = 'taxratesmanager/settings';
+        }
+
+        $prefix = preg_replace('/\/$/', '', $prefix);
+
+        return $this->app->getStore()->getConfig($prefix.'/'.$path);
     }
 }

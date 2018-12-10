@@ -41,25 +41,27 @@ class Yireo_TaxRatesManager_Check_Check
      * Yireo_TaxRatesManager_Provider constructor.
      * @param Config $config
      * @param Logger $logger
-     * @param string $onlineRatesUrl
+     * @param Yireo_TaxRatesManager_Provider_OnlineRates $onlineRatesProvider
      * @param int $verbosity
      */
     public function __construct(
         Config $config,
         Logger $logger,
-        string $onlineRatesUrl = 'https://raw.githubusercontent.com/yireo/Magento_EU_Tax_Rates/master/tax_rates_eu.csv',
+        OnlineRatesProvider $onlineRatesProvider,
+        StoredRatesProvider $storedRatesProvider,
         int $verbosity = 0
     ) {
         $this->config = $config;
         $this->logger = $logger;
-        $this->onlineRatesProvider = new OnlineRatesProvider($onlineRatesUrl);
-        $this->storedRatesProvider = new StoredRatesProvider($config);
+        $this->onlineRatesProvider = $onlineRatesProvider;
+        $this->storedRatesProvider = $storedRatesProvider;
         $this->verbosity = $verbosity;
     }
 
     /**
      * Main function
      * @throws Zend_Http_Client_Exception
+     * @throws Mage_Core_Model_Store_Exception
      * @return bool
      */
     public function __invoke(): bool

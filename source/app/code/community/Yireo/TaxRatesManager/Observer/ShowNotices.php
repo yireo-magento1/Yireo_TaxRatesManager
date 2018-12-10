@@ -7,6 +7,11 @@ declare(strict_types=1);
 class Yireo_TaxRatesManager_Observer_ShowNotices
 {
     /**
+     * @var Yireo_TaxRatesManager_Object_Factory
+     */
+    private $factory;
+
+    /**
      * @var Mage_Core_Model_Store
      */
     private $store;
@@ -22,6 +27,7 @@ class Yireo_TaxRatesManager_Observer_ShowNotices
      */
     public function __construct()
     {
+        $this->factory = Yireo_TaxRatesManager_Object_Factory::getInstance();
         $this->store = Mage::app()->getStore();
     }
 
@@ -42,9 +48,8 @@ class Yireo_TaxRatesManager_Observer_ShowNotices
             return $this;
         }
 
-        $messages = new Yireo_TaxRatesManager_Logger_Messages();
-        $check = new Yireo_TaxRatesManager_Check_Check($messages);
-        $check->execute();
+        $check = $this->factory->getCheck();
+        $check();
 
         return $this;
     }

@@ -12,8 +12,9 @@
         }
     ],
     "require": {
+        "yireo/yireo-eu-vat-rates-library": "dev-master",
         "php": ">=7.0.0",
-        "yireo/yireo-eu-vat-rates-library": "dev-master"
+        "ext-json": "*"
     },
     "require-dev":{
         "phpunit/phpunit":"*",

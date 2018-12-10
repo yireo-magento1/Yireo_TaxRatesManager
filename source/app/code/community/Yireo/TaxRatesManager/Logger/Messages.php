@@ -4,7 +4,7 @@ declare(strict_types=1);
 /**
  * Class Yireo_TaxRatesManager_Logger_Messages
  */
-class Yireo_TaxRatesManager_Logger_Messages implements Yireo_TaxRatesManager_Logger_Interface
+class Yireo_TaxRatesManager_Logger_Messages implements Yireo_TaxRatesManager_Api_LoggerInterface
 {
     /**
      * @param string $msg
@@ -20,6 +20,14 @@ class Yireo_TaxRatesManager_Logger_Messages implements Yireo_TaxRatesManager_Log
     public function success(string $msg)
     {
         Mage::getSingleton('adminhtml/session')->addNotice($msg);
+    }
+
+    /**
+     * @param string $msg
+     */
+    public function warning(string $msg)
+    {
+        Mage::getSingleton('adminhtml/session')->addWarning($msg);
     }
 
     /**

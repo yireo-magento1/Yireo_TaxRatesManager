@@ -36,10 +36,10 @@ class Yireo_TaxRatesManager_Provider_OnlineRates
      */
     public function getRates(): array
     {
-        require_once BP.'/vendor/autoload.php';
+        require_once BP . '/vendor/autoload.php';
 
         $rates = [];
-        $onlineRates = new Yireo\EuVatRates\MagentoRates(BP.'/var/cache');
+        $onlineRates = new Yireo\EuVatRates\MagentoRates(BP . '/var/cache');
 
         if ($this->config->allowCache() === false) {
             $onlineRates->disableCache();
@@ -53,9 +53,9 @@ class Yireo_TaxRatesManager_Provider_OnlineRates
         foreach ($onlineRates->getRates() as $onlineRate) {
             $rates[] = new Yireo_TaxRatesManager_Rate_Rate(
                 0,
-                (string) $onlineRate['code'],
-                (string) $onlineRate['country'],
-                (float) $onlineRate['rate']
+                (string)$onlineRate['code'],
+                (string)$onlineRate['country'],
+                (float)$onlineRate['rate']
             );
         }
 

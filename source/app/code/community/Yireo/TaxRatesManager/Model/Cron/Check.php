@@ -65,7 +65,17 @@ class Yireo_TaxRatesManager_Model_Cron_Check
             return false;
         }
 
-        // @todo: Rewrite this into a transactional email
+        $this->sendMail($contents);
+
+        return true;
+    }
+
+    /**
+     * @param string $contents
+     * @todo: Rewrite this into a transactional email
+     */
+    private function sendMail(string $contents)
+    {
         $subject = 'Yireo_TaxRateManager: Found warnings';
         $senderName = Mage::getStoreConfig(Store::XML_PATH_STORE_STORE_NAME);
         $senderEmail = 'info@yireo.com';
@@ -80,7 +90,5 @@ class Yireo_TaxRatesManager_Model_Cron_Check
         $mail->setFromName($senderName);
         $mail->setType('text');
         $mail->send();
-
-        return true;
     }
 }

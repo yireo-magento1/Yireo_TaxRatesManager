@@ -10,8 +10,6 @@
 
 declare(strict_types=1);
 
-use GuzzleHttp\Client;
-
 /**
  * Class Yireo_TaxRatesManager_Model_System_Config_Source_Feed
  */
@@ -39,13 +37,15 @@ class Yireo_TaxRatesManager_Model_System_Config_Source_Feed
      */
     private function getSources(): array
     {
-        $client   = new Client(['base_uri' => 'https://raw.githubusercontent.com/']);
-        $response = $client->get('/yireo/Magento_EU_Tax_Rates/master/feeds.json');
-        $contents = $response->getBody()->getContents();
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,Yireo_TaxRatesManager_Config_Config::PREFIX.'/feeds.json');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $contents = curl_exec($ch);
+        curl_close ($ch);
 
         try {
             $data = Zend_Json::decode($contents, true);
-        } catch(Zend_Json_Exception $exception) {
+        } catch (Zend_Json_Exception $exception) {
             return [];
         }
 

@@ -49,11 +49,12 @@ class Yireo_TaxRatesManager_Model_Cron_Check
     /**
      * @return bool
      * @throws Mage_Core_Model_Store_Exception
+     * @throws Zend_Http_Client_Exception
      */
     public function execute(): bool
     {
         ob_start();
-        call_user_func($this->check);
+        $this->check->execute();
         $contents = ob_get_clean();
 
         if (!$contents) {

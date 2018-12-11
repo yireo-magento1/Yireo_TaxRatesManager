@@ -44,6 +44,7 @@ class Yireo_TaxRatesManager_Observer_ShowNotices
      * @param Varien_Event_Observer $observer
      * @return $this
      * @throws Zend_Http_Client_Exception
+     * @throws Mage_Core_Model_Store_Exception
      */
     public function execute(Varien_Event_Observer $observer)
     {
@@ -58,7 +59,7 @@ class Yireo_TaxRatesManager_Observer_ShowNotices
         }
 
         $check = $this->factory->getCheck();
-        $check();
+        $check->execute();
 
         return $this;
     }

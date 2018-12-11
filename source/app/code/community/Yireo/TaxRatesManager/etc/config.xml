@@ -12,7 +12,7 @@
 <config>
     <modules>
         <Yireo_TaxRatesManager>
-            <version>1.0.9</version>
+            <version>1.1.0</version>
         </Yireo_TaxRatesManager>
     </modules>
 
@@ -96,6 +96,7 @@
                 <feed_source>tax_rates_eu.csv</feed_source>
                 <alternative_feed_source/>
                 <update_name>0</update_name>
+                <cache>1</cache>
             </settings>
         </taxratesmanager>
     </default>

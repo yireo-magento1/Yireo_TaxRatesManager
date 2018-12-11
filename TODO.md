@@ -1,12 +1,26 @@
 # TODO
-- Do not use cache when collecting new rates via cronjob
-- Add unit tests & integration tests
-- Allow for dummy URL to be used to see if it works
-- Create proper transactional email
 - Include composer library while packaging
-- Check for missing stored rates, that are available in online rates
+- Test installation with and without composer
 
-# How to guarantee that the GitHub feed changes as soon as a certain tax rates has changed?
-- Automatically create PRs?
-- Generate a PR in advance and merge it when the time is there?
-- Which sites to monitor for upcoming changes?
+## Version 2.0
+- Create proper transactional email
+- Test what happens if somebody configures a feed that delivers 404 or 500 error
+- Test what happens when Guzzle is of older version
+- Test what happens if MagentoRates library is not available
+- Add functional tests for:
+    - Fixing dates automatically and see if this works
+    - Removing all tax rates and restoring them
+
+## Video tutorials
+- Installing the extension via composer
+    - Commit composer file
+- Installing the extension manually
+- Fixing rates manually
+    - Change a date and see the hint in action
+- Getting started without any rates
+    - Demo environment, add dates automatically
+- Fixing rates automatically
+    - Via the backend
+    - Via cron: `magerun sys:cron:run yireo_taxratesmanager`
+- Testing if the New Year changes work
+    - Change feed into something else

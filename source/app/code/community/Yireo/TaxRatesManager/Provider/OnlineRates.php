@@ -39,7 +39,11 @@ class Yireo_TaxRatesManager_Provider_OnlineRates
         require_once BP.'/vendor/autoload.php';
 
         $rates = [];
-        $onlineRates = new Yireo\EuVatRates\MagentoRates(BP.'/var/tmp');
+        $onlineRates = new Yireo\EuVatRates\MagentoRates(BP.'/var/cache');
+
+        if ($this->config->allowCache() === false) {
+            $onlineRates->disableCache();
+        }
 
         $onlineUrl = $this->config->getFeedUrl();
         if (!empty($onlineUrl)) {

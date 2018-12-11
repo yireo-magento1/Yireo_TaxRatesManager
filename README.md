@@ -36,4 +36,4 @@ Make sure to set the `magento-root-dir` properly. Test this by running:
 Done.
 
 ## Tests
-This extension ships with some unit tests and some functional tests. Do make sure not to run these functional tests on an existing production site. The tests will modify the tax rates in your database.
+This extension ships with some unit tests and some functional tests. Do make sure to run the functional tests only on a testing site. The tests may modify the tax rates and other settings in your database.

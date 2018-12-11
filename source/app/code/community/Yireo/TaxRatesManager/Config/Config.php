@@ -105,6 +105,19 @@ class Yireo_TaxRatesManager_Config_Config
     }
 
     /**
+     * @return bool
+     * @throws Mage_Core_Model_Store_Exception
+     */
+    public function allowCache(): bool
+    {
+        if ($this->cli->isCli()) {
+            return false;
+        }
+
+        return (bool)$this->getModuleConfig('cache');
+    }
+
+    /**
      * @param string $path
      * @param string $prefix
      * @return string|null

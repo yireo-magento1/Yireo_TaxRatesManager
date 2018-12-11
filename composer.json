@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "yireo/yireo-eu-vat-rates-library": "dev-master",
+        "yireo/magento-eu-vat-rates-library": "^1.0",
         "php": ">=7.0.0",
         "ext-json": "*",
         "ext-curl": "*"

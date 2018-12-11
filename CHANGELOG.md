@@ -16,7 +16,7 @@
 # 0.1.0 (January 2018)
 - Automatically fix rates when online rate changes
 
-# 0.0.1 (
+# 0.0.1 (July 2017)
 - First draft with simple CLI script
 - Setup of GitHub CSV source
 

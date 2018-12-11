@@ -12,7 +12,6 @@
         }
     ],
     "require": {
-        "yireo/magento-eu-vat-rates-library": "^1.0",
         "php": ">=7.0.0",
         "ext-json": "*",
         "ext-curl": "*"
@@ -22,10 +21,6 @@
         "composer/composer":"*@dev"
     },
     "repositories": {
-        "yireo-eu-vat-rates": {
-            "type": "vcs",
-            "url": "git@gitlab.yireo.com:yireo-libraries/YireoEuVatRatesLibrary.git"
-        },
         "packagist": {
             "type": "composer",
             "url": "https://packages.firegento.com"

@@ -1,5 +1,4 @@
 # TODO
-- Add PHPComments everywhere
 - Do not use cache when collecting new rates via cronjob
 - Add integration tests
 - Include composer library while packaging

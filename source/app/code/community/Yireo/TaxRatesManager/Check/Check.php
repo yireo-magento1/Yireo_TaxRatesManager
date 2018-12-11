@@ -104,6 +104,14 @@ class Yireo_TaxRatesManager_Check_Check
     }
 
     /**
+     * @param int $verbosity
+     */
+    public function setVerbosity(int $verbosity)
+    {
+        $this->verbosity = $verbosity;
+    }
+
+    /**
      * @param Rate[] $storedRates
      * @param Rate[] $onlineRates
      * @throws Mage_Core_Model_Store_Exception

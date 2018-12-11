@@ -28,7 +28,7 @@ class Yireo_TaxRatesManager_Logger_Console implements Yireo_TaxRatesManager_Api_
      */
     public function success(string $msg)
     {
-        // Ignore on purpose
+        echo "SUCCESS: ".$msg."\n";
     }
 
     /**

@@ -94,7 +94,7 @@ class Yireo_TaxRatesManager_Object_Factory
      * @param string $className
      * @return object
      */
-    private function get(string $className)
+    public function get(string $className)
     {
         return $this->getSingleton(ObjectManager::class)->get($className);
     }

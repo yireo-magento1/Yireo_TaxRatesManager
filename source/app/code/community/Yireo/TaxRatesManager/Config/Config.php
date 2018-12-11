@@ -15,10 +15,13 @@ declare(strict_types=1);
  */
 class Yireo_TaxRatesManager_Config_Config
 {
+    const PREFIX = 'https://raw.githubusercontent.com/yireo/Magento_EU_Tax_Rates/master/';
+
     /**
      * @var Mage_Core_Model_App
      */
     private $app;
+
     /**
      * @var Yireo_TaxRatesManager_Util_CommandLine
      */
@@ -84,13 +87,12 @@ class Yireo_TaxRatesManager_Config_Config
             return $alternativeFeed;
         }
 
-        $prefix = 'https://raw.githubusercontent.com/yireo/Magento_EU_Tax_Rates/master/';
         $feed = (string)$this->getModuleConfig('feed_source');
         if (!empty($feed)) {
-            return $prefix . $feed;
+            return self::PREFIX . $feed;
         }
 
-        return $prefix . 'tax_rates_eu.csv';
+        return self::PREFIX . 'tax_rates_eu.csv';
     }
 
     /**

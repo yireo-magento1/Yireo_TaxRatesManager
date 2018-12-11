@@ -32,7 +32,7 @@ class Yireo_TaxRatesManager_Provider_OnlineRates
 
     /**
      * @return Yireo_TaxRatesManager_Rate_Rate[]
-     * @throws Zend_Http_Client_Exception
+     * @throws Mage_Core_Model_Store_Exception
      */
     public function getRates(): array
     {

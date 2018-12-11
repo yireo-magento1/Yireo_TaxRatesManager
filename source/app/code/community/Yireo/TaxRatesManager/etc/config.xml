@@ -77,7 +77,7 @@
         <jobs>
             <yireo_taxratesmanager>
                 <schedule>
-                    <cron_expr>*/30 * * * *</cron_expr>
+                    <cron_expr>*/5 * * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>taxratesmanager/cron_check::execute</model>

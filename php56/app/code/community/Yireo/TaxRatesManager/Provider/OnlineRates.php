@@ -8,8 +8,6 @@
  * @license     Open Source License (OSL v3)
  */
 
-declare(strict_types=1);
-
 /**
  * Class Yireo_TaxRatesManager_Provider_OnlineRates
  */
@@ -50,7 +48,7 @@ class Yireo_TaxRatesManager_Provider_OnlineRates
      * @throws Mage_Core_Model_Store_Exception
      * @throws Zend_Cache_Exception
      */
-    public function getRates(): array
+    public function getRates()
     {
         require_once BP . '/vendor/autoload.php';
 
@@ -74,7 +72,7 @@ class Yireo_TaxRatesManager_Provider_OnlineRates
      * @throws Mage_Core_Model_Store_Exception
      * @throws Zend_Cache_Exception
      */
-    private function getRatesFromCacheOrOnline(): array
+    private function getRatesFromCacheOrOnline()
     {
         if ($this->config->allowCache()) {
             $rates = $this->loadFromCache();
@@ -93,7 +91,7 @@ class Yireo_TaxRatesManager_Provider_OnlineRates
      * @return array
      * @throws Mage_Core_Model_Store_Exception
      */
-    private function loadFromCache(): array
+    private function loadFromCache()
     {
         if ($data = Mage::app()->getCache()->load($this->getCacheId())) {
             $data = unserialize($data);
@@ -110,7 +108,7 @@ class Yireo_TaxRatesManager_Provider_OnlineRates
      * @return array
      * @throws Mage_Core_Model_Store_Exception
      */
-    private function loadFromOnline(): array
+    private function loadFromOnline()
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,$this->config->getFeedUrl());
@@ -142,7 +140,7 @@ class Yireo_TaxRatesManager_Provider_OnlineRates
      * @return string
      * @throws Mage_Core_Model_Store_Exception
      */
-    private function getCacheId(): string
+    private function getCacheId()
     {
         $feedUrl = $this->config->getFeedUrl();
         return 'TAXRATESMANAGER_' . md5($feedUrl);
@@ -163,7 +161,7 @@ class Yireo_TaxRatesManager_Provider_OnlineRates
      * @param array $headerRow
      * @return bool
      */
-    private function validateHeaderRow(array $headerRow): bool
+    private function validateHeaderRow(array $headerRow)
     {
         if (count($headerRow) !== count($this->columns)) {
             throw new InvalidArgumentException('CSV header is of unexpected size: '.var_export($headerRow));

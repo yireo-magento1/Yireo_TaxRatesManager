@@ -8,8 +8,6 @@
  * @license     Open Source License (OSL v3)
  */
 
-declare(strict_types=1);
-
 /**
  * Class Yireo_TaxRatesManager_Logger_Messages
  */
@@ -18,7 +16,7 @@ class Yireo_TaxRatesManager_Logger_Messages implements Yireo_TaxRatesManager_Api
     /**
      * @param string $msg
      */
-    public function info(string $msg)
+    public function info($msg)
     {
         Mage::getSingleton('adminhtml/session')->addNotice($msg);
     }
@@ -26,7 +24,7 @@ class Yireo_TaxRatesManager_Logger_Messages implements Yireo_TaxRatesManager_Api
     /**
      * @param string $msg
      */
-    public function success(string $msg)
+    public function success($msg)
     {
         Mage::getSingleton('adminhtml/session')->addNotice($msg);
     }
@@ -34,7 +32,7 @@ class Yireo_TaxRatesManager_Logger_Messages implements Yireo_TaxRatesManager_Api
     /**
      * @param string $msg
      */
-    public function warning(string $msg)
+    public function warning($msg)
     {
         Mage::getSingleton('adminhtml/session')->addWarning($msg);
     }
@@ -42,7 +40,7 @@ class Yireo_TaxRatesManager_Logger_Messages implements Yireo_TaxRatesManager_Api
     /**
      * @param string $msg
      */
-    public function error(string $msg)
+    public function error($msg)
     {
         Mage::getSingleton('adminhtml/session')->addError($msg);
     }

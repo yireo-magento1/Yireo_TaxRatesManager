@@ -8,8 +8,6 @@
  * @license     Open Source License (OSL v3)
  */
 
-declare(strict_types=1);
-
 /**
  * Class Yireo_TaxRatesManager_Rate_Rate
  */
@@ -43,10 +41,10 @@ class Yireo_TaxRatesManager_Rate_Rate
      * @param float $percentage
      */
     public function __construct(
-        int $id,
-        string $code,
-        string $countryId,
-        float $percentage)
+        $id,
+        $code,
+        $countryId,
+        $percentage)
     {
         $this->id = $id;
         $this->code = $code;
@@ -57,7 +55,7 @@ class Yireo_TaxRatesManager_Rate_Rate
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -65,7 +63,7 @@ class Yireo_TaxRatesManager_Rate_Rate
     /**
      * @return string
      */
-    public function getCode(): string
+    public function getCode()
     {
         return $this->code;
     }
@@ -73,7 +71,7 @@ class Yireo_TaxRatesManager_Rate_Rate
     /**
      * @return string
      */
-    public function getCountryId(): string
+    public function getCountryId()
     {
         return $this->countryId;
     }
@@ -81,7 +79,7 @@ class Yireo_TaxRatesManager_Rate_Rate
     /**
      * @return float
      */
-    public function getPercentage(): float
+    public function getPercentage()
     {
         return $this->percentage;
     }
@@ -89,7 +87,7 @@ class Yireo_TaxRatesManager_Rate_Rate
     /**
      * @param float $percentage
      */
-    public function setPercentage(float $percentage)
+    public function setPercentage($percentage)
     {
         $this->percentage = $percentage;
     }

@@ -8,8 +8,6 @@
  * @license     Open Source License (OSL v3)
  */
 
-declare(strict_types=1);
-
 use Yireo_TaxRatesManager_Config_Config as Config;
 use Yireo_TaxRatesManager_Api_LoggerInterface as Logger;
 use Yireo_TaxRatesManager_Check_Check as Check;
@@ -51,7 +49,7 @@ class Yireo_TaxRatesManager_Model_Cron_Check
      * @throws Mage_Core_Model_Store_Exception
      * @throws Zend_Http_Client_Exception
      */
-    public function execute(): bool
+    public function execute()
     {
         ob_start();
         $this->check->execute();
@@ -74,7 +72,7 @@ class Yireo_TaxRatesManager_Model_Cron_Check
      * @param string $contents
      * @todo: Rewrite this into a transactional email
      */
-    private function sendMail(string $contents)
+    private function sendMail($contents)
     {
         $subject = 'Yireo_TaxRateManager: Found warnings';
         $senderName = Mage::getStoreConfig(Store::XML_PATH_STORE_STORE_NAME);

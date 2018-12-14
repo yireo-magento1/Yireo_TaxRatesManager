@@ -8,8 +8,6 @@
  * @license     Open Source License (OSL v3)
  */
 
-declare(strict_types=1);
-
 /**
  * Class Yireo_TaxRatesManager_Observer_ShowNotices
  */
@@ -45,6 +43,7 @@ class Yireo_TaxRatesManager_Observer_ShowNotices
      * @return $this
      * @throws Zend_Http_Client_Exception
      * @throws Mage_Core_Model_Store_Exception
+     * @throws Zend_Cache_Exception
      */
     public function execute(Varien_Event_Observer $observer)
     {

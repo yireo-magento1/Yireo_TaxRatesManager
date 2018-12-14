@@ -8,8 +8,6 @@
  * @license     Open Source License (OSL v3)
  */
 
-declare(strict_types=1);
-
 /**
  * Class Yireo_TaxRatesManager_Object_Manager
  */
@@ -20,7 +18,7 @@ class Yireo_TaxRatesManager_Object_Manager
      * @return object
      * @throws ReflectionException
      */
-    public function get(string $className)
+    public function get($className)
     {
         if ($object = $this->getMagentoObject($className)) {
             return $object;
@@ -40,7 +38,7 @@ class Yireo_TaxRatesManager_Object_Manager
      * @return object|null
      * @throws ReflectionException
      */
-    private function getMagentoObject(string $className)
+    private function getMagentoObject($className)
     {
         if ($className === Mage_Core_Model_App::class) {
             return Mage::app();
@@ -60,7 +58,7 @@ class Yireo_TaxRatesManager_Object_Manager
      * @return object|null
      * @throws ReflectionException
      */
-    private function getPreferenceObject(string $className)
+    private function getPreferenceObject($className)
     {
         $preferences = $this->getPreferences();
         if (isset($preferences[$className])) {
@@ -71,7 +69,7 @@ class Yireo_TaxRatesManager_Object_Manager
     /**
      * @return string[]
      */
-    private function getPreferences() : array
+    private function getPreferences()
     {
         return [];
     }
@@ -81,7 +79,7 @@ class Yireo_TaxRatesManager_Object_Manager
      * @return array
      * @throws ReflectionException
      */
-    private function getConstructorParameters(ReflectionClass $reflectionClass): array
+    private function getConstructorParameters(ReflectionClass $reflectionClass)
     {
         $constructorParameters = [];
         $constructor = $reflectionClass->getConstructor();
@@ -108,7 +106,7 @@ class Yireo_TaxRatesManager_Object_Manager
      * @return bool
      * @throws ReflectionException
      */
-    private function isCli(): bool
+    private function isCli()
     {
         /** @var Yireo_TaxRatesManager_Util_CommandLine $cli */
         $cli = $this->get(Yireo_TaxRatesManager_Util_CommandLine::class);

@@ -8,8 +8,6 @@
  * @license     Open Source License (OSL v3)
  */
 
-declare(strict_types=1);
-
 /**
  * Class Yireo_TaxRatesManager_Logger_Console
  */
@@ -18,7 +16,7 @@ class Yireo_TaxRatesManager_Logger_Console implements Yireo_TaxRatesManager_Api_
     /**
      * @param string $msg
      */
-    public function info(string $msg)
+    public function info($msg)
     {
         echo "INFO: ".$msg."\n";
     }
@@ -26,7 +24,7 @@ class Yireo_TaxRatesManager_Logger_Console implements Yireo_TaxRatesManager_Api_
     /**
      * @param string $msg
      */
-    public function success(string $msg)
+    public function success($msg)
     {
         echo "SUCCESS: ".$msg."\n";
     }
@@ -34,7 +32,7 @@ class Yireo_TaxRatesManager_Logger_Console implements Yireo_TaxRatesManager_Api_
     /**
      * @param string $msg
      */
-    public function warning(string $msg)
+    public function warning($msg)
     {
         echo "WARNING: ".$msg."\n";
     }
@@ -42,7 +40,7 @@ class Yireo_TaxRatesManager_Logger_Console implements Yireo_TaxRatesManager_Api_
     /**
      * @param string $msg
      */
-    public function error(string $msg)
+    public function error($msg)
     {
         echo "ERROR: ".$msg."\n";
     }

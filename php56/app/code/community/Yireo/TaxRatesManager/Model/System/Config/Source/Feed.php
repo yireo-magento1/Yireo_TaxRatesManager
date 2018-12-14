@@ -8,8 +8,6 @@
  * @license     Open Source License (OSL v3)
  */
 
-declare(strict_types=1);
-
 /**
  * Class Yireo_TaxRatesManager_Model_System_Config_Source_Feed
  */
@@ -18,7 +16,7 @@ class Yireo_TaxRatesManager_Model_System_Config_Source_Feed
     /**
      * @return array
      */
-    public function toOptionArray(): array
+    public function toOptionArray()
     {
         $options = [];
 
@@ -35,7 +33,7 @@ class Yireo_TaxRatesManager_Model_System_Config_Source_Feed
     /**
      * @return string[]
      */
-    private function getSources(): array
+    private function getSources()
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,Yireo_TaxRatesManager_Config_Config::PREFIX.'/feeds.json');

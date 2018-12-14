@@ -8,8 +8,6 @@
  * @license     Open Source License (OSL v3)
  */
 
-declare(strict_types=1);
-
 /**
  * Class Yireo_TaxRatesManager_Config_Config
  */
@@ -44,7 +42,7 @@ class Yireo_TaxRatesManager_Config_Config
      * @return bool
      * @throws Mage_Core_Model_Store_Exception
      */
-    public function fixAutomatically(): bool
+    public function fixAutomatically()
     {
         if ($this->cli->isCli()) {
             return (bool)$this->getModuleConfig('fix_automatically_in_cron');
@@ -57,7 +55,7 @@ class Yireo_TaxRatesManager_Config_Config
      * @return bool
      * @throws Mage_Core_Model_Store_Exception
      */
-    public function sendEmail(): bool
+    public function sendEmail()
     {
         return (bool)$this->getModuleConfig('send_email');
     }
@@ -66,7 +64,7 @@ class Yireo_TaxRatesManager_Config_Config
      * @return string
      * @throws Mage_Core_Model_Store_Exception
      */
-    public function email(): string
+    public function email()
     {
         $email = (string)$this->getModuleConfig('email');
         if (!empty($email)) {
@@ -80,7 +78,7 @@ class Yireo_TaxRatesManager_Config_Config
      * @return string
      * @throws Mage_Core_Model_Store_Exception
      */
-    public function getFeedUrl(): string
+    public function getFeedUrl()
     {
         $alternativeFeed = (string)$this->getModuleConfig('alternative_feed_source');
         if ($alternativeFeed) {
@@ -99,7 +97,7 @@ class Yireo_TaxRatesManager_Config_Config
      * @return bool
      * @throws Mage_Core_Model_Store_Exception
      */
-    public function updateNameFromExistingItems(): bool
+    public function updateNameFromExistingItems()
     {
         return (bool)$this->getModuleConfig('update_name');
     }
@@ -108,7 +106,7 @@ class Yireo_TaxRatesManager_Config_Config
      * @return bool
      * @throws Mage_Core_Model_Store_Exception
      */
-    public function allowCache(): bool
+    public function allowCache()
     {
         if ($this->cli->isCli()) {
             return false;
@@ -123,7 +121,7 @@ class Yireo_TaxRatesManager_Config_Config
      * @return string|null
      * @throws Mage_Core_Model_Store_Exception
      */
-    private function getModuleConfig(string $path, string $prefix = '')
+    private function getModuleConfig($path, $prefix = '')
     {
         if (empty($prefix)) {
             $prefix = 'taxratesmanager/settings';

@@ -8,8 +8,6 @@
  * @license     Open Source License (OSL v3)
  */
 
-declare(strict_types=1);
-
 use Yireo_TaxRatesManager_Config_Config as Config;
 use Yireo_TaxRatesManager_Provider_StoredRates as StoredRatesProvider;
 use Yireo_TaxRatesManager_Object_Manager as ObjectManager;
@@ -59,7 +57,7 @@ class Yireo_TaxRatesManager_Object_Factory
     /**
      * @return Config
      */
-    public function getConfig(): Config
+    public function getConfig()
     {
         return $this->get(Config::class);
     }
@@ -69,7 +67,7 @@ class Yireo_TaxRatesManager_Object_Factory
      * @return Yireo_TaxRatesManager_Api_LoggerInterface
      * @throws Mage_Core_Model_Store_Exception
      */
-    public function getLogger(string $type = 'console'): Yireo_TaxRatesManager_Api_LoggerInterface
+    public function getLogger($type = 'console')
     {
         return $this->get(Yireo_TaxRatesManager_Api_LoggerInterface::class);
     }
@@ -77,7 +75,7 @@ class Yireo_TaxRatesManager_Object_Factory
     /**
      * @return Yireo_TaxRatesManager_Check_Check
      */
-    public function getCheck(): Yireo_TaxRatesManager_Check_Check
+    public function getCheck()
     {
         return $this->get(Yireo_TaxRatesManager_Check_Check::class);
     }
@@ -85,7 +83,7 @@ class Yireo_TaxRatesManager_Object_Factory
     /**
      * @return Yireo_TaxRatesManager_Provider_StoredRates
      */
-    public function getStoredRatesProvider(): StoredRatesProvider
+    public function getStoredRatesProvider()
     {
         return $this->get(StoredRatesProvider::class);
     }
@@ -94,7 +92,7 @@ class Yireo_TaxRatesManager_Object_Factory
      * @param string $className
      * @return object
      */
-    public function get(string $className)
+    public function get($className)
     {
         return $this->getSingleton(ObjectManager::class)->get($className);
     }

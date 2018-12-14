@@ -8,8 +8,6 @@
  * @license     Open Source License (OSL v3)
  */
 
-declare(strict_types=1);
-
 /**
  * Class Yireo_TaxRatesManager_Provider_StoredRates
  */
@@ -32,7 +30,7 @@ class Yireo_TaxRatesManager_Provider_StoredRates
     /**
      * @return Yireo_TaxRatesManager_Rate_Rate[]
      */
-    public function getRates(): array
+    public function getRates()
     {
         $rates = [];
         $collection = Mage::getModel('tax/calculation_rate')->getCollection();

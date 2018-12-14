@@ -8,8 +8,6 @@
  * @license     Open Source License (OSL v3)
  */
 
-declare(strict_types=1);
-
 use Yireo_TaxRatesManager_Config_Config as Config;
 use Yireo_TaxRatesManager_Api_LoggerInterface as Logger;
 use Yireo_TaxRatesManager_Provider_OnlineRates as OnlineRatesProvider;
@@ -66,7 +64,7 @@ class Yireo_TaxRatesManager_Check_Check
         OnlineRatesProvider $onlineRatesProvider,
         StoredRatesProvider $storedRatesProvider,
         Yireo_TaxRatesManager_Util_Comparer $comparer,
-        int $verbosity = 0
+        $verbosity = 0
     ) {
         $this->config = $config;
         $this->logger = $logger;
@@ -80,9 +78,10 @@ class Yireo_TaxRatesManager_Check_Check
      * Main function
      * @throws Zend_Http_Client_Exception
      * @throws Mage_Core_Model_Store_Exception
+     * @throws Zend_Cache_Exception
      * @return bool
      */
-    public function execute(): bool
+    public function execute()
     {
         $storedRates = $this->storedRatesProvider->getRates();
         if (empty($storedRates)) {
@@ -114,7 +113,7 @@ class Yireo_TaxRatesManager_Check_Check
     /**
      * @param int $verbosity
      */
-    public function setVerbosity(int $verbosity)
+    public function setVerbosity($verbosity)
     {
         $this->verbosity = $verbosity;
     }
@@ -141,7 +140,7 @@ class Yireo_TaxRatesManager_Check_Check
      * @return bool
      * @throws Mage_Core_Model_Store_Exception
      */
-    private function checkStoredRate(Rate $storedRate, array $onlineRates): bool
+    private function checkStoredRate(Rate $storedRate, array $onlineRates)
     {
         $suggestRate = 0;
         foreach ($onlineRates as $onlineRate) {
@@ -190,7 +189,7 @@ class Yireo_TaxRatesManager_Check_Check
      * @return bool
      * @throws Mage_Core_Model_Store_Exception
      */
-    private function checkOnlineRate(Rate $onlineRate, array $storedRates): bool
+    private function checkOnlineRate(Rate $onlineRate, array $storedRates)
     {
         if (!$onlineRate->getPercentage() > 0) {
             return false;
@@ -234,5 +233,4 @@ class Yireo_TaxRatesManager_Check_Check
 
         return true;
     }
-
 }

@@ -120,6 +120,7 @@ class Yireo_TaxRatesManager_Provider_OnlineRates
         $headerRow = array_shift($rows);
         $this->validateHeaderRow($headerRow);
 
+        $rates = [];
         foreach ($rows as $row) {
             if (empty($row[0])) {
                 continue;
@@ -127,7 +128,7 @@ class Yireo_TaxRatesManager_Provider_OnlineRates
             $i = 0;
             $rate = [];
             foreach ($this->columns as $columnCode => $columnName) {
-                $rate[$columnCode] = $row[$i] ?? '';
+                $rate[$columnCode] = $row[$i] ? $row[$i] : '';
                 $i++;
             }
             $rates[] = $rate;

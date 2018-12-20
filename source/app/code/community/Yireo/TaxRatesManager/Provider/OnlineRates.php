@@ -52,8 +52,6 @@ class Yireo_TaxRatesManager_Provider_OnlineRates
      */
     public function getRates(): array
     {
-        require_once BP . '/vendor/autoload.php';
-
         $rates = [];
         $onlineRates = $this->getRatesFromCacheOrOnline();
 

@@ -1,3 +1,6 @@
+# 1.1.1 (December 2018)
+- Removed autoloading from extension
+
 # 1.1.0 (December 2018)
 - First public release
 

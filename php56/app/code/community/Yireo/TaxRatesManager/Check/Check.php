@@ -179,6 +179,8 @@ class Yireo_TaxRatesManager_Check_Check
             $msg .= ' Perhaps it should be removed or empty?';
         }
 
+        $msg .= ' ['.$storedRate->getCountryId().']';
+
         $this->logger->warning($msg);
         return false;
     }

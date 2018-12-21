@@ -1,3 +1,6 @@
+# 1.1.2 (December 2018)
+- Make sure invalid rules from earlier don't crash the system
+
 # 1.1.1 (December 2018)
 - Removed autoloading from extension
 

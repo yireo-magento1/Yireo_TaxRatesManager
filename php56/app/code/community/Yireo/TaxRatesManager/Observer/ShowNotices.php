@@ -52,8 +52,14 @@ class Yireo_TaxRatesManager_Observer_ShowNotices
         }
 
         $request = Mage::app()->getRequest();
+
         $controllerName = $request->getControllerName();
         if ($controllerName !== 'tax_rate') {
+            return $this;
+        }
+
+        $actionName = $request->getActionName();
+        if ($actionName !== 'index' && $actionName !== 'edit') {
             return $this;
         }
 

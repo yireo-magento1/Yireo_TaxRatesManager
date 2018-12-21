@@ -62,8 +62,12 @@ class Yireo_TaxRatesManager_Provider_StoredRates
             $model->load($rate->getId());
         }
 
-        if (!$rate->getId() > 0 || $this->config->updateNameFromExistingItems()) {
+        if (!$rate->getId() > 0 || !$model->getCode() || $this->config->updateNameFromExistingItems()) {
             $model->setCode($rate->getCode());
+        }
+
+        if (!$model->getTaxPostcode()) {
+            $model->setTaxPostcode('*');
         }
 
         $model->setTaxCountryId($rate->getCountryId());

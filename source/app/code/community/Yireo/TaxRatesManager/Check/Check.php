@@ -164,7 +164,9 @@ class Yireo_TaxRatesManager_Check_Check
             return true;
         }
 
-        $msg = sprintf('Existing rate "%s" (%s%%) seems incorrect.', $storedRate->getCode(), $storedRate->getPercentage());
+        if ($suggestRate == $storedRate->getPercentage()) {
+            return true;
+        }
 
         if ($this->config->fixAutomatically()) {
             $storedRate->setPercentage($suggestRate);
@@ -174,6 +176,7 @@ class Yireo_TaxRatesManager_Check_Check
             return true;
         }
 
+        $msg = sprintf('Existing rate "%s" (%s%%) seems incorrect.', $storedRate->getCode(), $storedRate->getPercentage());
         if ($suggestRate > 0) {
             $msg .= ' ' . sprintf('Perhaps it should be %s%%?', $suggestRate);
         } else {
@@ -236,5 +239,5 @@ class Yireo_TaxRatesManager_Check_Check
 
         return true;
     }
-
 }
+

@@ -140,7 +140,7 @@ class Yireo_TaxRatesManager_Check_Check
      * @return bool
      * @throws Mage_Core_Model_Store_Exception
      */
-    private function checkStoredRate(Rate $storedRate, array $onlineRates)
+    public function checkStoredRate(Rate $storedRate, array $onlineRates)
     {
         $suggestRate = 0;
         foreach ($onlineRates as $onlineRate) {
@@ -183,6 +183,8 @@ class Yireo_TaxRatesManager_Check_Check
         }
 
         $msg .= ' ['.$storedRate->getCountryId().']';
+        $fixUrl = Mage::getUrl('adminhtml/taxratesmanager/fix', ['id' => $storedRate->getId()]);
+        $msg .= ' (<a href="'.$fixUrl.'">Click to fix this now</a>)';
 
         $this->logger->warning($msg);
         return false;

@@ -28,6 +28,23 @@ class Yireo_TaxRatesManager_Provider_StoredRates
     }
 
     /**
+     * @param $id
+     * @return Yireo_TaxRatesManager_Rate_Rate
+     */
+    public function getRateById($id)
+    {
+        /** @var Mage_Tax_Model_Calculation_Rate $item */
+        $item = Mage::getModel('tax/calculation_rate')->load($id);
+
+        return new Yireo_TaxRatesManager_Rate_Rate(
+            (int)$item->getId(),
+            (string)$item->getCode(),
+            (string)$item->getTaxCountryId(),
+            (float)$item->getRate()
+        );
+    }
+
+    /**
      * @return Yireo_TaxRatesManager_Rate_Rate[]
      */
     public function getRates()

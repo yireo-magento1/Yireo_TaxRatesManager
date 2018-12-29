@@ -12,7 +12,7 @@
 <config>
     <modules>
         <Yireo_TaxRatesManager>
-            <version>1.1.2</version>
+            <version>1.2.0</version>
         </Yireo_TaxRatesManager>
     </modules>
 
@@ -72,6 +72,18 @@
             </controller_action_predispatch>
         </events>
     </adminhtml>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <taxratesmanager after="Mage_Adminhtml">Yireo_TaxRatesManager</taxratesmanager>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
 
     <crontab>
         <jobs>

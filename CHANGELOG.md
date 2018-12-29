@@ -1,3 +1,7 @@
+# 1.2.0 (December 2018)
+- Add a quick "Fix" link to each notice
+- Drop non-PHP56-compatible code, even though it sounds crazy to us (PHP7 is simply supported)
+
 # 1.1.2 (December 2018)
 - Make sure invalid rules from earlier don't crash the system
 

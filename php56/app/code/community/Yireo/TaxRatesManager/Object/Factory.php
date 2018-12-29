@@ -10,6 +10,7 @@
 
 use Yireo_TaxRatesManager_Config_Config as Config;
 use Yireo_TaxRatesManager_Provider_StoredRates as StoredRatesProvider;
+use Yireo_TaxRatesManager_Provider_OnlineRates as OnlineRatesProvider;
 use Yireo_TaxRatesManager_Object_Manager as ObjectManager;
 
 /**
@@ -86,6 +87,14 @@ class Yireo_TaxRatesManager_Object_Factory
     public function getStoredRatesProvider()
     {
         return $this->get(StoredRatesProvider::class);
+    }
+
+    /**
+     * @return Yireo_TaxRatesManager_Provider_OnlineRates
+     */
+    public function getOnlineRatesProvider()
+    {
+        return $this->get(OnlineRatesProvider::class);
     }
 
     /**

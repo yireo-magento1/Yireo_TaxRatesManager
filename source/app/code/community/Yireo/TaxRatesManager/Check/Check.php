@@ -50,6 +50,11 @@ class Yireo_TaxRatesManager_Check_Check
     private $verbosity;
 
     /**
+     * @var bool
+     */
+    private $fixAutomatically = false;
+
+    /**
      * Yireo_TaxRatesManager_Provider constructor.
      * @param Config $config
      * @param Logger $logger
@@ -57,6 +62,7 @@ class Yireo_TaxRatesManager_Check_Check
      * @param Yireo_TaxRatesManager_Provider_StoredRates $storedRatesProvider
      * @param Yireo_TaxRatesManager_Util_Comparer $comparer
      * @param int $verbosity
+     * @throws Mage_Core_Model_Store_Exception
      */
     public function __construct(
         Config $config,
@@ -72,6 +78,7 @@ class Yireo_TaxRatesManager_Check_Check
         $this->storedRatesProvider = $storedRatesProvider;
         $this->comparer = $comparer;
         $this->verbosity = $verbosity;
+        $this->fixAutomatically = $this->config->fixAutomatically();
     }
 
     /**
@@ -119,6 +126,14 @@ class Yireo_TaxRatesManager_Check_Check
     }
 
     /**
+     * @param $fixAutomatically
+     */
+    public function setFixAutomatically($fixAutomatically)
+    {
+        $this->fixAutomatically = (bool) $fixAutomatically;
+    }
+
+    /**
      * @param Rate[] $storedRates
      * @param Rate[] $onlineRates
      * @throws Mage_Core_Model_Store_Exception
@@ -139,6 +154,7 @@ class Yireo_TaxRatesManager_Check_Check
      * @param Rate[] $onlineRates
      * @return bool
      * @throws Mage_Core_Model_Store_Exception
+     * @throws Exception
      */
     public function checkStoredRate(Rate $storedRate, array $onlineRates)
     {
@@ -167,7 +183,7 @@ class Yireo_TaxRatesManager_Check_Check
             return true;
         }
         
-        if ($this->config->fixAutomatically()) {
+        if ($this->fixAutomatically) {
             $storedRate->setPercentage($suggestRate);
             $this->storedRatesProvider->saveRate($storedRate);
             $msg = sprintf('Automatically corrected existing rate to %s%%: %s', $suggestRate, $storedRate->getCode());
@@ -195,6 +211,7 @@ class Yireo_TaxRatesManager_Check_Check
      * @param Rate[] $storedRates
      * @return bool
      * @throws Mage_Core_Model_Store_Exception
+     * @throws Exception
      */
     private function checkOnlineRate(Rate $onlineRate, array $storedRates)
     {
@@ -232,7 +249,7 @@ class Yireo_TaxRatesManager_Check_Check
             $onlineRate->getCountryId()
         ));
 
-        if ($this->config->fixAutomatically()) {
+        if ($this->fixAutomatically) {
             $this->storedRatesProvider->saveRate($onlineRate);
             $msg = sprintf('Automatically saved a new rate %s: %s', $onlineRate->getPercentage(), $onlineRate->getCode());
             $this->logger->success($msg);

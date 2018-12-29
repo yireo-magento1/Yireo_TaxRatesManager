@@ -31,12 +31,29 @@ class Yireo_TaxRatesManager_TaxratesmanagerController extends Mage_Adminhtml_Con
         $storedRate = $this->getFactory()->getStoredRatesProvider()->getRateById($id);
         $onlineRates = $this->getFactory()->getOnlineRatesProvider()->getRates();
 
+        $check->setFixAutomatically(true);
         $check->checkStoredRate($storedRate, $onlineRates);
 
-        // Set a message
-        $this->getAdminHtmlSession()->addSuccess($this->__('Deleted rule succesfully'));
+        $this->_redirect('adminhtml/tax_rate');
+    }
 
-        // Redirect
+    /**
+     * Remove all existing rates
+     *
+     * @throws Exception
+     */
+    public function cleanAction()
+    {
+        $storedRates = $this->getFactory()->getStoredRatesProvider()->getRates();
+        foreach ($storedRates as $storedRate) {
+            $this->getFactory()->getStoredRatesProvider()->removeRate($storedRate);
+        }
+
+        $check = $this->getFactory()->getCheck();
+        $check->setFixAutomatically(true);
+        $check->execute();
+
+        $this->getAdminHtmlSession()->addSuccess($this->__('Removed all rates succesfully'));
         $this->_redirect('adminhtml/tax_rate');
     }
 

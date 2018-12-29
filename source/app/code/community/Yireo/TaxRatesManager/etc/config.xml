@@ -63,13 +63,22 @@
         <events>
             <controller_action_predispatch>
                 <observers>
-                    <yireo_taxratemanager_shownotices>
+                    <yireo_taxratemanager_show_notices>
                         <type>model</type>
                         <class>Yireo_TaxRatesManager_Observer_ShowNotices</class>
                         <method>execute</method>
-                    </yireo_taxratemanager_shownotices>
+                    </yireo_taxratemanager_show_notices>
                 </observers>
             </controller_action_predispatch>
+            <adminhtml_block_html_before>
+                <observers>
+                    <yireo_taxratemanager_add_clean_button>
+                        <type>singleton</type>
+                        <class>Yireo_TaxRatesManager_Observer_AddCleanButton</class>
+                        <method>execute</method>
+                    </yireo_taxratemanager_add_clean_button>
+                </observers>
+            </adminhtml_block_html_before>
         </events>
     </adminhtml>
 

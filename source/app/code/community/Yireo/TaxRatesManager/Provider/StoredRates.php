@@ -69,6 +69,17 @@ class Yireo_TaxRatesManager_Provider_StoredRates
      * @param Yireo_TaxRatesManager_Rate_Rate $rate
      * @throws Exception
      */
+    public function removeRate(Yireo_TaxRatesManager_Rate_Rate $rate)
+    {
+        $model = Mage::getModel('tax/calculation_rate');
+        $model->load($rate->getId());
+        $model->delete();
+    }
+
+    /**
+     * @param Yireo_TaxRatesManager_Rate_Rate $rate
+     * @throws Exception
+     */
     public function saveRate(Yireo_TaxRatesManager_Rate_Rate $rate)
     {
         $model = Mage::getModel('tax/calculation_rate');

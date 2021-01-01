@@ -183,7 +183,7 @@ class Yireo_TaxRatesManager_Check_Check
             return true;
         }
         
-        if ($this->fixAutomatically) {
+        if ($suggestRate > 0 && $this->fixAutomatically) {
             $storedRate->setPercentage($suggestRate);
             $this->storedRatesProvider->saveRate($storedRate);
             $msg = sprintf('Automatically corrected existing rate to %s%%: %s', $suggestRate, $storedRate->getCode());
